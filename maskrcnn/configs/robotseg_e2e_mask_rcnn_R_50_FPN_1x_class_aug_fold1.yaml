@@ -1,0 +1,46 @@
+MODEL:
+  META_ARCHITECTURE: "GeneralizedRCNN"
+  WEIGHT: "/media/SSD2/candidate-experiments/pretrained_weights/modified/e2e_mask_rcnn_R_50_FPN_1x.pth"
+  BACKBONE:
+    CONV_BODY: "R-50-FPN"
+    OUT_CHANNELS: 256
+  RPN:
+    USE_FPN: True
+    ANCHOR_STRIDE: (4, 8, 16, 32, 64)
+    PRE_NMS_TOP_N_TRAIN: 2000
+    PRE_NMS_TOP_N_TEST: 1000
+    POST_NMS_TOP_N_TEST: 1000
+    FPN_POST_NMS_TOP_N_TEST: 1000
+  ROI_HEADS:
+    USE_FPN: True
+  ROI_BOX_HEAD:
+    POOLER_RESOLUTION: 7
+    POOLER_SCALES: (0.25, 0.125, 0.0625, 0.03125)
+    POOLER_SAMPLING_RATIO: 2
+    FEATURE_EXTRACTOR: "FPN2MLPFeatureExtractor"
+    PREDICTOR: "FPNPredictor"
+    NUM_CLASSES: 10
+  ROI_MASK_HEAD:
+    POOLER_SCALES: (0.25, 0.125, 0.0625, 0.03125)
+    FEATURE_EXTRACTOR: "MaskRCNNFPNFeatureExtractor"
+    PREDICTOR: "MaskRCNNC4Predictor"
+    POOLER_RESOLUTION: 14
+    POOLER_SAMPLING_RATIO: 2
+    RESOLUTION: 28
+    SHARE_BOX_FEATURE_EXTRACTOR: False
+  MASK_ON: True
+DATASETS:
+  TRAIN: ("coco_robotseg_2017_cropped_fold0_all", "coco_robotseg_2017_cropped_fold2_all", "coco_robotseg_2017_cropped_fold3_all", "coco_robotseg_2018_labels2017_train", "coco_robotseg_2018_labels2017_val", )
+  TEST: ("coco_robotseg_2017_cropped_fold1_all", "coco_robotseg_2017_cropped_fold0_all", "coco_robotseg_2017_cropped_fold2_all", "coco_robotseg_2017_cropped_fold3_all", )
+DATALOADER:
+  SIZE_DIVISIBILITY: 32
+SOLVER:
+  BASE_LR: 0.0025
+  WEIGHT_DECAY: 0.0001
+  STEPS: (14196, 14196)
+  MAX_ITER: 14196
+  IMS_PER_BATCH: 4
+  CHECKPOINT_PERIOD: 338
+OUTPUT_DIR: "/media/SSD2/LCS_v2/mrcnn/new"
+TEST:
+  IMS_PER_BATCH: 4
