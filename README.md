@@ -14,10 +14,10 @@ Requirements:
 - [Detectron v.1](https://github.com/facebookresearch/maskrcnn-benchmark) (for using our pre-trained weights)
 
 ## Pre-trained Weights
-Coming soon [here](https://biomedicalcomputervision.uniandes.edu.co/index.php/research?id=44).
+Pre-trained weights are publicly available on the [project page](https://biomedicalcomputervision.uniandes.edu.co/index.php/research?id=44).
 
 ## Additional Annotations EndoVis 2018 Dataset
-Coming soon [here](https://biomedicalcomputervision.uniandes.edu.co/index.php/research?id=44).
+Additional annotations for the EndoVis 2018 Dataset are publicly available on the [project page](https://biomedicalcomputervision.uniandes.edu.co/index.php/research?id=44).
 
 ## Data Preparation
 Check the instructions detailed in [data/README.md](data/README.md)
