@@ -31,7 +31,7 @@ python -W ignore main.py --inference --model FlowNet2  --batch_size batch_size -
   --inference_dataset_cand_dir /path/to/save/candidates \ --inference_dataset_nms 'True' \
   --save /path/to/save/predictions \
   --inference_dataset_dataset '2017' or '2018' \
-  --inference_dataset_maskrcnn_inference 'True' \
+  --inference_dataset_maskrcnn_inference 'False' \
   --assignment_strategy 'weighted_mode' \ --inference_dataset_prev_frames 7 \
   --threshold 0.0 for 2017 and 0.5 for 2018 \
   --resume /path/to/flownet/checkpoint --num-classes number_of_classes
