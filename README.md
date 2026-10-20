@@ -24,15 +24,19 @@ Check the instructions detailed in [data/README.md](data/README.md)
 ## Perform Inference
 ````
 python -W ignore main.py --inference --model FlowNet2  --batch_size batch_size --number_workers num_workers \
---inference_dataset RobotsegTrackerDataset \ --inference_dataset_img_dir /path/to/images \ --inference_batch_size batch_size \
+--inference_dataset RobotsegTrackerDataset \
+  --inference_dataset_img_dir /path/to/images \
+  --inference_batch_size batch_size \
   --inference_dataset_coco_ann_path /path/to/coco/annotations/file.json \
   --inference_dataset_segm_path /path/to/mask-rcnn/inference/segm.json \
   --inference_dataset_ann_dir /path/to/annotations \
-  --inference_dataset_cand_dir /path/to/save/candidates \ --inference_dataset_nms 'True' \
+  --inference_dataset_cand_dir /path/to/save/candidates \
+  --inference_dataset_nms 'True' \
   --save /path/to/save/predictions \
   --inference_dataset_dataset '2017' or '2018' \
   --inference_dataset_maskrcnn_inference 'False' \
-  --assignment_strategy 'weighted_mode' \ --inference_dataset_prev_frames 7 \
+  --assignment_strategy 'weighted_mode' \
+  --inference_dataset_prev_frames 7 \
   --threshold 0.0 for 2017 and 0.5 for 2018 \
   --resume /path/to/flownet/checkpoint --num-classes number_of_classes
 ````

@@ -1,6 +1,7 @@
 # freda (todo) : 
 
 import os, time, sys, math
+import argparse
 import subprocess, shutil
 from os.path import *
 import numpy as np
@@ -52,6 +53,20 @@ class TimerBlock:
         fid.write("%s\n"%(string))
         fid.close()
 
+def str2bool(v):
+    if isinstance(v, bool):
+        return v
+    if v.lower() in ('yes', 'true', 't', 'y', '1'):
+        return True
+    elif v.lower() in ('no', 'false', 'f', 'n', '0'):
+        return False
+    else:
+        raise argparse.ArgumentTypeError('Boolean value expected.')
+
+def arg_type(default):
+    # type(True) is bool and bool('False') is True, so parse bool flags explicitly
+    return str2bool if isinstance(default, bool) else type(default)
+
 def add_arguments_for_module(parser, module, argument_for_class, default, skip_params=[], parameter_defaults={}):
     argument_group = parser.add_argument_group(argument_for_class.capitalize())
 
@@ -70,9 +85,9 @@ def add_arguments_for_module(parser, module, argument_for_class, default, skip_p
         cmd_arg = '{}_{}'.format(argument_for_class, arg)
         if arg not in skip_params + ['self', 'args']:
             if arg in list(parameter_defaults.keys()):
-                argument_group.add_argument('--{}'.format(cmd_arg), type=type(parameter_defaults[arg]), default=parameter_defaults[arg])
+                argument_group.add_argument('--{}'.format(cmd_arg), type=arg_type(parameter_defaults[arg]), default=parameter_defaults[arg])
             elif (defaults is not None and i < len(defaults)):
-                argument_group.add_argument('--{}'.format(cmd_arg), type=type(defaults[i]), default=defaults[i])
+                argument_group.add_argument('--{}'.format(cmd_arg), type=arg_type(defaults[i]), default=defaults[i])
             else:
                 print(("[Warning]: non-default argument '{}' detected on class '{}'. This argument cannot be modified via the command line"
                         .format(arg, module.__class__.__name__)))
