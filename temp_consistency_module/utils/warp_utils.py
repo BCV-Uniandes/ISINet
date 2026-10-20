@@ -94,6 +94,7 @@ def warp_ann(ann, flow, padding_mode='zeros'):
     """
     # w/o this normalization, warping DOES NOT work
     _, h, w = flow.shape
+    flow = flow.clone()  # do not modify the caller's flow in place
     flow[0, :, :] /= w
     flow[1, :, :] /= h
 
@@ -191,8 +192,8 @@ def match(candidates, warped_cands, min_iou=0.5):
     warped_cand_min = np.argmax(matrix, axis=0)
     warped_cand_idx = np.arange(0, warped_cands.shape[0])
 
-    paired_anns = np.zeros(candidates.shape[0]) > 0
-    paired_anns[warped_cand_min] = (cand_min[warped_cand_min] == warped_cand_idx)
+    # a current candidate is paired iff it is the best match of its own best warped candidate
+    paired_anns = warped_cand_min[cand_min] == np.arange(candidates.shape[0])
     selected_warped_cands = cand_min[paired_anns]
     match = np.full(candidates.shape[0], np.inf)
     match[paired_anns] = selected_warped_cands

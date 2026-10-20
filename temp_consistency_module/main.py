@@ -252,8 +252,9 @@ if __name__ == '__main__':
                             flow_utils.writeFlow(join(flow_folder, '%06d.flo'%(batch_idx * args.inference_batch_size + i)),  _pflow)
                     
                     if len(outputs) >= (args.inference_dataset_prev_frames - 1):
+                        # keep the cache newest-first: drop the oldest flow, prepend the new one
                         outputs.pop(-1)
-                        outputs.append(output)
+                        outputs.insert(0, output)
                         break
                     else:
                         outputs.append(output)
